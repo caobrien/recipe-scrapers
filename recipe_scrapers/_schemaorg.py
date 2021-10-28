@@ -206,3 +206,27 @@ class SchemaOrg:
         elif isinstance(cuisine, list):
             return ",".join(cuisine)
         return cuisine
+        
+    def description(self):
+        description = self.data.get("description")
+        if description is None:
+            description = self.data.get("abstract")
+            if description is None:
+                raise SchemaOrgException("No description data in SchemaOrg.")
+        return description
+        
+    def category(self):
+        category = self.data.get("recipeCategory")
+        if category is None:
+            raise SchemaOrgException("No category data in SchemaOrg.")
+        elif isinstance(category, list):
+            return ",".join(category)
+        return category
+    
+    def datePublished(self):
+        return self.data.get("datePublished")
+    
+    def author(self):
+        return normalize_string(self.data.get("author"))
+    
+        

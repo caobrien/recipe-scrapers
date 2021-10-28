@@ -1,5 +1,7 @@
+import extruct
+import requests
 from ._abstract import AbstractScraper
-
+from ._utils import normalize_string
 
 class HelloFresh(AbstractScraper):
     @classmethod
@@ -26,3 +28,23 @@ class HelloFresh(AbstractScraper):
 
     def nutrients(self):
         return self.schema.nutrients()
+    
+    def description(self):
+        return self.schema.description()
+        
+    def cuisine(self):
+        return self.schema.cuisine()
+    
+    def category(self):
+        return self.schema.category()
+        
+    def author(self):
+        return self.schema.author()
+    
+    def date_published(self):
+        return self.schema.datePublished()
+    
+    def difficulty(self):
+        d = self.soup.find("span", {"data-translation-id": "recipe-detail.cooking-difficulty"}).parent.next_sibling.get_text()
+        return normalize_string(d)
+
